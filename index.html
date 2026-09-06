@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Anshul</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Live Study Timer Bar -->
+    <div class="live-timer-bar" id="liveTimerBar">
+        <div class="live-timer-content">
+            <span class="live-indicator"><i class="fas fa-circle"></i> STUDYING</span>
+            <span class="live-subject" id="liveSubject">General</span>
+            <span class="live-time" id="liveTime">00:00:00</span>
+            <button class="live-stop-btn" id="liveStopBtn"><i class="fas fa-stop"></i> Stop</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Anshul</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="subjects">
+                    <i class="fas fa-book"></i>
+                    <span>Subjects</span>
+                </a>
+                <a href="#" class="nav-item" data-section="progress">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="#" class="nav-item" data-section="timer">
+                    <i class="fas fa-clock"></i>
+                    <span>Study Timer</span>
+                </a>
+                <a href="#" class="nav-item" data-section="youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube Study</span>
+                </a>
+                <a href="#" class="nav-item" data-section="notes">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Notes</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">Student</span>
+                        <span class="user-status">Active Learner</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="Search subjects, notes...">
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="shareBtn" title="Share/Export">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                    <button class="header-btn" id="importBtn" title="Import Data">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="header-btn" id="settingsBtn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h1>Welcome back, <span id="welcomeName">Student</span>!</h1>
+                    <p>Here's your study overview</p>
+                </div>
+
+                <!-- Live Study Card -->
+                <div class="live-study-card" id="liveStudyCard">
+                    <div class="live-study-info">
+                        <h3><i class="fas fa-play-circle"></i> Start Live Study Session</h3>
+                        <p>Track your study time in real-time</p>
+                    </div>
+                    <div class="live-study-controls">
+                        <select id="liveStudySubject">
+                            <option value="General">General Study</option>
+                        </select>
+                        <button class="primary-btn" id="startLiveStudy">
+                            <i class="fas fa-play"></i> Start Studying
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalSubjects">0</h3>
+                            <p>Total Subjects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedTopics">0</h3>
+                            <p>Completed Topics</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="studyStreak">0</h3>
+                            <p>Day Streak</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalHours">0h 0m</h3>
+                            <p>Total Study Time</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Stats -->
+                <div class="today-stats card">
+                    <h2><i class="fas fa-calendar-day"></i> Today's Progress</h2>
+                    <div class="today-info">
+                        <div class="today-item">
+                            <span class="today-value" id="todayHours">0h 0m</span>
+                            <span class="today-label">Study Time</span>
+                        </div>
+                        <div class="today-item">
+                            <span class="today-value" id="todaySessions">0</span>
+                            <span class="today-label">Sessions</span>
+                        </div>
+                        <div class="today-item">
+                            <span class="today-value" id="todayTopics">0</span>
+                            <span class="today-label">Topics Done</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Actions -->
+                <div class="dashboard-grid">
+                    <div class="card recent-activity">
+                        <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                        <div class="activity-list" id="activityList">
+                            <p class="empty-state">No recent activity yet. Start studying!</p>
+                        </div>
+                    </div>
+                    <div class="card quick-actions">
+                        <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                        <div class="actions-grid">
+                            <button class="action-btn" onclick="showSection('timer')">
+                                <i class="fas fa-play"></i>
+                                <span>Pomodoro Timer</span>
+                            </button>
+                            <button class="action-btn" onclick="showSection('youtube')">
+                                <i class="fab fa-youtube"></i>
+                                <span>Watch & Learn</span>
+                            </button>
+                            <button class="action-btn" onclick="showSection('notes')">
+                                <i class="fas fa-pen"></i>
+                                <span>Take Notes</span>
+                            </button>
+                            <button class="action-btn" onclick="showSection('subjects')">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Subject</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subjects Section -->
+            <section id="subjects" class="section">
+                <div class="section-header">
+                    <h1>My Subjects</h1>
+                    <button class="primary-btn" id="addSubjectBtn">
+                        <i class="fas fa-plus"></i> Add Subject
+                    </button>
+                </div>
+                <div class="subjects-grid" id="subjectsGrid"></div>
+                <div class="modal" id="subjectModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Add New Subject</h2>
+                            <button class="close-btn" onclick="closeModal('subjectModal')">&times;</button>
+                        </div>
+                        <form id="subjectForm">
+                            <div class="form-group">
+                                <label>Subject Name</label>
+                                <input type="text" id="subjectName" required placeholder="e.g., Mathematics">
+                            </div>
+                            <div class="form-group">
+                                <label>Color Theme</label>
+                                <div class="color-picker">
+                                    <input type="radio" name="subjectColor" value="#4F46E5" id="color1" checked>
+                                    <label for="color1" style="background: #4F46E5"></label>
+                                    <input type="radio" name="subjectColor" value="#10B981" id="color2">
+                                    <label for="color2" style="background: #10B981"></label>
+                                    <input type="radio" name="subjectColor" value="#F59E0B" id="color3">
+                                    <label for="color3" style="background: #F59E0B"></label>
+                                    <input type="radio" name="subjectColor" value="#EF4444" id="color4">
+                                    <label for="color4" style="background: #EF4444"></label>
+                                    <input type="radio" name="subjectColor" value="#8B5CF6" id="color5">
+                                    <label for="color5" style="background: #8B5CF6"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Topics (one per line)</label>
+                                <textarea id="subjectTopics" rows="4" placeholder="Chapter 1&#10;Chapter 2&#10;Chapter 3"></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn full-width">Add Subject</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section id="progress" class="section">
+                <div class="section-header">
+                    <h1>My Progress</h1>
+                </div>
+                <div class="progress-overview">
+                    <div class="card overall-progress">
+                        <h2><i class="fas fa-trophy"></i> Overall Progress</h2>
+                        <div class="progress-circle-container">
+                            <div class="progress-circle" id="overallProgressCircle">
+                                <span class="progress-value" id="overallProgressValue">0%</span>
+                            </div>
+                        </div>
+                        <p class="progress-label">Keep going!</p>
+                    </div>
+                    <div class="card subject-progress">
+                        <h2><i class="fas fa-list-check"></i> Subject Progress</h2>
+                        <div class="subject-progress-list" id="subjectProgressList">
+                            <p class="empty-state">Add subjects to see progress</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card weekly-chart">
+                    <h2><i class="fas fa-calendar-week"></i> Weekly Study Hours</h2>
+                    <div class="chart-container">
+                        <div class="bar-chart" id="weeklyChart">
+                            <div class="bar" data-day="Mon"><span class="bar-fill"></span><span class="bar-label">Mon</span></div>
+                            <div class="bar" data-day="Tue"><span class="bar-fill"></span><span class="bar-label">Tue</span></div>
+                            <div class="bar" data-day="Wed"><span class="bar-fill"></span><span class="bar-label">Wed</span></div>
+                            <div class="bar" data-day="Thu"><span class="bar-fill"></span><span class="bar-label">Thu</span></div>
+                            <div class="bar" data-day="Fri"><span class="bar-fill"></span><span class="bar-label">Fri</span></div>
+                            <div class="bar" data-day="Sat"><span class="bar-fill"></span><span class="bar-label">Sat</span></div>
+                            <div class="bar" data-day="Sun"><span class="bar-fill"></span><span class="bar-label">Sun</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Study Timer Section -->
+            <section id="timer" class="section">
+                <div class="section-header">
+                    <h1>Study Timer</h1>
+                </div>
+                <div class="timer-container">
+                    <div class="card timer-card">
+                        <div class="timer-mode">
+                            <button class="mode-btn active" data-mode="pomodoro" data-time="25">Pomodoro (25m)</button>
+                            <button class="mode-btn" data-mode="short" data-time="5">Short Break (5m)</button>
+                            <button class="mode-btn" data-mode="long" data-time="15">Long Break (15m)</button>
+                        </div>
+                        <div class="timer-display">
+                            <span id="timerMinutes">25</span>:<span id="timerSeconds">00</span>
+                        </div>
+                        <div class="timer-subject">
+                            <label>Studying:</label>
+                            <select id="timerSubject">
+                                <option value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start" id="startTimer">
+                                <i class="fas fa-play"></i> Start
+                            </button>
+                            <button class="timer-btn pause" id="pauseTimer" disabled>
+                                <i class="fas fa-pause"></i> Pause
+                            </button>
+                            <button class="timer-btn reset" id="resetTimer">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                        <div class="session-count">
+                            <p>Sessions today: <span id="sessionsToday">0</span></p>
+                        </div>
+                    </div>
+                    <div class="card timer-tips">
+                        <h2><i class="fas fa-lightbulb"></i> Study Tips</h2>
+                        <ul class="tips-list">
+                            <li><i class="fas fa-check"></i> Focus on one task at a time</li>
+                            <li><i class="fas fa-check"></i> Take regular breaks</li>
+                            <li><i class="fas fa-check"></i> Stay hydrated</li>
+                            <li><i class="fas fa-check"></i> Review notes regularly</li>
+                            <li><i class="fas fa-check"></i> Teach what you learn</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- YouTube Study Section -->
+            <section id="youtube" class="section">
+                <div class="section-header">
+                    <h1>YouTube Study</h1>
+                </div>
+                <div class="youtube-container">
+                    <div class="card youtube-search-card">
+                        <h2><i class="fab fa-youtube"></i> Search Educational Videos</h2>
+                        <div class="youtube-search-box">
+                            <input type="text" id="youtubeSearchInput" placeholder="Search for educational videos...">
+                            <button class="primary-btn" id="youtubeSearchBtn">
+                                <i class="fas fa-search"></i> Search on YouTube
+                            </button>
+                        </div>
+                        <div class="quick-topics">
+                            <span>Quick Topics:</span>
+                            <button class="topic-tag" data-query="mathematics tutorial for students">Math</button>
+                            <button class="topic-tag" data-query="physics lecture">Physics</button>
+                            <button class="topic-tag" data-query="programming tutorial beginners">Coding</button>
+                            <button class="topic-tag" data-query="chemistry basics">Chemistry</button>
+                            <button class="topic-tag" data-query="english grammar lessons">English</button>
+                            <button class="topic-tag" data-query="biology lecture">Biology</button>
+                        </div>
+                    </div>
+                    <div class="youtube-embed-section">
+                        <div class="card">
+                            <h2><i class="fas fa-video"></i> Watch Video</h2>
+                            <div class="youtube-input-box">
+                                <input type="text" id="youtubeUrlInput" placeholder="Paste YouTube video URL here...">
+                                <button class="primary-btn" id="loadVideoBtn">
+                                    <i class="fas fa-play"></i> Load Video
+                                </button>
+                            </div>
+                            <div id="youtubePlayer" class="youtube-player">
+                                <div class="youtube-placeholder">
+                                    <i class="fab fa-youtube"></i>
+                                    <p>Paste a YouTube URL above to watch videos while studying</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card saved-videos-card">
+                        <h2><i class="fas fa-bookmark"></i> Saved Videos</h2>
+                        <div class="saved-videos-list" id="savedVideosList">
+                            <p class="empty-state">No saved videos yet</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notes Section -->
+            <section id="notes" class="section">
+                <div class="section-header">
+                    <h1>My Notes</h1>
+                    <button class="primary-btn" id="addNoteBtn">
+                        <i class="fas fa-plus"></i> New Note
+                    </button>
+                </div>
+                <div class="notes-filter">
+                    <input type="text" id="notesSearch" placeholder="Search notes...">
+                    <select id="notesFilterSubject">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
+                <div class="notes-container">
+                    <div class="notes-list" id="notesList"></div>
+                </div>
+                <div class="modal" id="noteModal">
+                    <div class="modal-content modal-large">
+                        <div class="modal-header">
+                            <h2 id="noteModalTitle">Add New Note</h2>
+                            <button class="close-btn" onclick="closeModal('noteModal')">&times;</button>
+                        </div>
+                        <form id="noteForm">
+                            <input type="hidden" id="noteId">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" id="noteTitle" required placeholder="Note title">
+                            </div>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <select id="noteSubject">
+                                    <option value="">General</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Content</label>
+                                <textarea id="noteContent" rows="12" placeholder="Write your notes here..."></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn full-width">Save Note</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal" id="viewNoteModal">
+                    <div class="modal-content modal-large">
+                        <div class="modal-header">
+                            <h2 id="viewNoteTitle">Note Title</h2>
+                            <button class="close-btn" onclick="closeModal('viewNoteModal')">&times;</button>
+                        </div>
+                        <div class="view-note-subject" id="viewNoteSubject">General</div>
+                        <div class="view-note-content" id="viewNoteContent"></div>
+                        <div class="view-note-actions">
+                            <button class="primary-btn" id="editViewedNote"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="danger-btn" id="deleteViewedNote"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn" onclick="closeModal('settingsModal')">&times;</button>
+            </div>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="settingsName" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Theme</label>
+                    <select id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+                <button type="submit" class="primary-btn full-width">Save Settings</button>
+            </form>
+            <hr>
+            <div class="danger-zone">
+                <h3>Danger Zone</h3>
+                <button class="danger-btn" id="resetDataBtn">
+                    <i class="fas fa-trash"></i> Reset All Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Dashboard</h2>
+                <button class="close-btn" onclick="closeModal('shareModal')">&times;</button>
+            </div>
+            <div class="share-options">
+                <p>Export your dashboard data to share or backup:</p>
+                <button class="primary-btn full-width" id="exportDataBtn">
+                    <i class="fas fa-file-export"></i> Download as File
+                </button>
+                <div class="share-code-section">
+                    <label>Or copy this code:</label>
+                    <textarea id="shareCode" readonly rows="4"></textarea>
+                    <button class="primary-btn" id="copyCodeBtn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Import Data</h2>
+                <button class="close-btn" onclick="closeModal('importModal')">&times;</button>
+            </div>
+            <div class="import-options">
+                <p>Import dashboard data:</p>
+                <div class="form-group">
+                    <label>Upload JSON File</label>
+                    <input type="file" id="importFile" accept=".json">
+                </div>
+                <div class="form-group">
+                    <label>Or paste code:</label>
+                    <textarea id="importCode" rows="4" placeholder="Paste exported code here..."></textarea>
+                </div>
+                <button class="primary-btn full-width" id="importDataBtn">
+                    <i class="fas fa-file-import"></i> Import Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
